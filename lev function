@@ -1,0 +1,115 @@
+function log(args) {
+    var str = "";
+    for (var i = 0; i < arguments.length; i++) {
+        if (typeof arguments[i] === "object") {
+            str += JSON.stringify(arguments[i]);
+        } else {
+            str += arguments[i];
+        }
+    }
+    var div = document.createElement("div");
+    div.innerHTML = str;
+    document.body.appendChild(div);
+}
+
+function levenshteinDistance (s, t) {
+        if (!s.length) return t.length;
+        if (!t.length) return s.length;
+ 
+        return Math.min(
+                levenshteinDistance(s.substr(1), t) + 1,
+                levenshteinDistance(t.substr(1), s) + 1,
+                levenshteinDistance(s.substr(1), t.substr(1)) + (s.charAt(0).toLowerCase() !== t.charAt(0).toLowerCase() ? 1 : 0)
+        );
+}
+
+var testStrings = [
+    "People are afraid of monters.",
+    "Mansters are very scary, even in the daytime",
+    "I like mnsters.",
+    "I like a big, scary monser"
+];
+
+var candidateWord = "monsters";
+var words;
+var results = [];
+for (var i = 0; i < testStrings.length; i++) {
+    words = testStrings[i].split(/[\s.,<>;:'"{}\[\]]+/);
+    for (var j = 0; j < words.length; j++) {
+        if (words[j]) {
+            results.push({word: words[j], score: levenshteinDistance(words[j], candidateWord)});
+        }
+    }
+}
+
+results.sort(function(a, b) {
+    return a.score - b.score;
+});
+
+var lastScore;
+for (i = 0; i < results.length; i++) {
+    if (results[i].score !== lastScore) {
+        lastScore = results[i].score
+        log("Score: " + lastScore);
+    }
+    log("&nbsp;&nbsp;&nbsp;&nbsp;"+ results[i].word);
+}
+
+
+
+// old code
+
+                imageRaw
+                    .convolute([
+                        [0, -1, 0],
+                        [-1, 5, -1],
+                        [0, -1, 0]
+                    ])
+                    .write(imageOne)
+
+                let src = cv.matFromImageData(imageRaw.bitmap)
+                let dst = new cv.Mat()
+                let M = cv.Mat.ones(2, 2, cv.CV_8U)
+                let anchor = new cv.Point(-1, -1)
+                cv.dilate(src, dst, M, anchor, 1, cv.BORDER_CONSTANT, cv.morphologyDefaultBorderValue())
+
+                let dilatedImage = new Jimp({
+                    width: dst.cols,
+                    height: dst.rows,
+                    data: Buffer.from(dst.data)
+                })
+
+                dilatedImage
+                    .write(imageTwo)
+                    .invert()
+                    .write(imageThree)
+                    /*.threshold({
+                        max: 100
+                    })*/
+
+                cv.threshold(dilatedImage, 0, 255, cv.THRESH_BINARY_INV + cv.THRESH_OTSU)[1]
+
+                dilatedImage
+                    .write(imageOut)
+
+
+
+///////////////
+
+image
+    .quality(100)
+    .convolute([
+        [0, -1, 0],
+        [-1, 5, -1],
+        [0, -1, 0]
+    ])
+    .color([{
+        apply: 'tint',
+        params: [30]
+    }])
+    .invert()
+    .threshold({
+        max: 40
+    })
+    .contrast(2)
+    .write(imageThresh)

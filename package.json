@@ -1,0 +1,27 @@
+{
+	"name": "next-bot",
+	"version": "1.0.0",
+	"author": "Sebastian Palmqvist<mystichal@live.com>",
+	"license": "MIT",
+	"type": "module",
+	"main": "bot.js",
+	"scripts": {
+		"start": "node --experimental-modules --no-warnings src/bot.js",
+		"dev": "next dev src/bot.js",
+		"build": "next build"
+	},
+	"dependencies": {
+		"@techstark/opencv-js": "^4.6.0-release.1",
+		"discord-reply": "^0.1.2",
+		"discord.js": "^14.3.0",
+		"dotenv": "^16.0.1",
+		"fs": "^0.0.1-security",
+		"jimp": "^0.16.1",
+		"moment": "^2.29.4",
+		"next": "^12.2.5",
+		"node-fetch": "^3.2.10",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"tesseract.js": "^3.0.2"
+	}
+}
